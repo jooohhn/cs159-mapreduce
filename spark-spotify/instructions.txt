@@ -1,0 +1,13 @@
+# Should have had mvn installed prior to script
+
+# 1) Compile your code into a jar
+
+$ mvn package
+
+# 2) scp your jar to the VM
+
+$ scp target/spark-spotify-1.0.jar jtran@j-tran:/user/jtran/
+
+# 3) Use Spark to run the program 
+$ spark-submit --deploy-mode cluster --class spotify.Main ~/server/spark-spotify-1.0.jar hdfs:///user/ubuntu/input/data.csv hdfs:///user/ubuntu/spark_output
+

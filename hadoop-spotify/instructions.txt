@@ -1,0 +1,12 @@
+1) Compile your code into a jar
+
+$ mvn package
+
+# 2) scp your jar to the VM
+
+$ scp target/spark-spotify-1.0.jar jtran@j-tran:/user/jtran/
+
+# 3) Use Spark to run the program 
+
+$ hadoop jar ~/server/hadoop-spotify-1.0.jar spotify.MRdriver input/data.csv hadoop_output
+
