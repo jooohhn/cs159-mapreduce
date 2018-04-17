@@ -16,28 +16,11 @@ public class Main {
   static int NF = 7;
   static String IFS = ",";
 
-  /**
-   * Used to filter out bad input in data set. [position, trackname, artist, streams, url, date,
-   * region]
-   */
-  public static boolean isValid(String[] properties) {
-    if (properties.length != NF)
-      return false;
-    try {
-      Integer.parseInt(properties[0]);
-      Integer.parseInt(properties[3]);
-      return true;
-    } catch (NumberFormatException e) {
-      return false;
-    }
-  }
-
   public static void main(String[] args) throws Exception {
     String inputFile = args[0];
     String outputFolder = args[1];
     SparkConf conf = new SparkConf().setAppName("spotify.Main");
     JavaSparkContext sc = new JavaSparkContext(conf);
-    // Format is [position, trackname, artist, streams, url, date, region]
     JavaRDD<String> input = sc.textFile(inputFile);
 
     // Split csv into a rows RDD and filters out bad records
@@ -54,6 +37,7 @@ public class Main {
         return isValid(s.split(IFS));
       }
     });
+
     // Creates RDD pair of (artist, streams), then writes output
     JavaPairRDD<String, Long> rdd = rows.mapToPair(new PairFunction<String, String, Long>() {
       private static final long serialVersionUID = 1L;
@@ -73,5 +57,21 @@ public class Main {
     });
     rdd.coalesce(1).saveAsTextFile(outputFolder);
     sc.close();
+  }
+
+  /**
+   * Used to filter out bad input in data set. 
+   * Format: [position, trackname, artist, streams, url, date, region]
+   */
+  public static boolean isValid(String[] properties) {
+    if (properties.length != NF)
+      return false;
+    try {
+      Integer.parseInt(properties[0]);
+      Integer.parseInt(properties[3]);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
   }
 }

@@ -6,10 +6,10 @@ import java.io.IOException;
 import org.apache.hadoop.io.LongWritable;
 
 public class MRreducer extends Reducer<Text, LongWritable, Text, LongWritable> {
-  
+
   /**
    * @key: artist
-   * @values: List of "trackname,streams"
+   * @values: List of streams
    */
   @Override
   public void reduce(Text key, Iterable<LongWritable> values, Context context)
@@ -19,9 +19,9 @@ public class MRreducer extends Reducer<Text, LongWritable, Text, LongWritable> {
     long streams = values.iterator().next().get();
 
     // 2: Aggregate stream count
-    for (LongWritable value : values) 
+    for (LongWritable value : values)
       streams += value.get();
-    
+
     // 3: Write to output
     context.write(new Text("artist: " + key.toString()), new LongWritable(streams));
   }

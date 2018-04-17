@@ -6,7 +6,7 @@ import org.apache.hadoop.io.LongWritable;
 import java.io.IOException;
 
 public class MRmapper extends Mapper<Object, Text, Text, LongWritable> {
-  // Input Field Separator, Output Field Separator, Number of properties
+  // Input Field Separator, Number of properties
   static String IFS = ",";
   static int NF = 7;
 
