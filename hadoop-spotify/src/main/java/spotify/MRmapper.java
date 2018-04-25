@@ -10,9 +10,8 @@ public class MRmapper extends Mapper<Object, Text, Text, LongWritable> {
   static String IFS = ",";
   static int NF = 7;
 
-
   /**
-   * @value: Line in the csv file. Fomratted as
+   * @value: Line in the csv file. Formatted as
    *         'video_id,title,channel_title,category_id,tags,views,likes,dislikes,
    *         comment_total,thumbnail_link,date'
    */

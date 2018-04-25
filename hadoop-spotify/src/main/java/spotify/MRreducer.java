@@ -23,6 +23,9 @@ public class MRreducer extends Reducer<Text, LongWritable, Text, LongWritable> {
       streams += value.get();
 
     // 3: Write to output
-    context.write(new Text("artist: " + key.toString()), new LongWritable(streams));
+    context.write(
+      new Text("artist: " + key.toString()), 
+      new LongWritable(streams)
+    );
   }
 }
